@@ -28,10 +28,10 @@ app.use('/jquery', express.static(__dirname +
 
 
 
-app.use(express.static("assets"))
+app.use(express.static("assetns"))
 app.get("/", function (req, res) {
-res.render("Inicio", {
-layout: "Inicio",
+res.render("main", {
+layout: "main",
 imagenes: [
     "piscomistral40",
     "cebollas",
