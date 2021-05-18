@@ -1,0 +1,23 @@
+{{#each imagenes}}
+<button class="cartas col-2 offset-1 bg-white {{this}}" onclick="añadir('{{this}}')">
+    <h5 class=" card-title">{{this}}</h5>
+    <img class="card-img" src="/{{this}}.jpg" alt="Card image cap">
+</button>
+{{/each}}
+
+<script>
+    async function añadir(producto) {
+        let nombre = producto;
+        const response = await fetch("http://localhost:3003/producto", {
+            method: "post",
+            body: JSON.stringify({
+                nombre,
+            }),
+        });
+    };
+</script>
+<style>
+    .cartas {
+        margin-top: 20px;
+    }
+</style>

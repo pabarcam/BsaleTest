@@ -11,7 +11,7 @@ app.engine(
 "handlebars",
 exphbs({
 layoutsDir: __dirname + "/views",
-partialsDir: __dirname + "/views/componentes/",
+partialsDir: __dirname + "/views/components/",
 })
 )
 
@@ -22,23 +22,17 @@ app.use('/bootstrap', express.static(__dirname +
     '/node_modules/bootstrap/dist/css'))
 app.use('/bootstrapjs', express.static(__dirname +
     '/node_modules/bootstrap/dist/js'))
-    // Paso 3
 app.use('/jquery', express.static(__dirname +
     '/node_modules/jquery/dist'))
 
 
 
-app.use(express.static("assetns"))
+app.use(express.static("assets"))
 app.get("/", function (req, res) {
-res.render("main", {
-layout: "main",
+res.render("Inicio", {
+layout: "Inicio",
 imagenes: [
-    "piscomistral40",
-    "cebollas",
-    "lechuga",
-    "papas",
-    "pimenton",
-    "tomate"
+    "redlabrl"
 ],
 src: 
 "https://www.seekpng.com/png/detail/986-9868123_png-file-icono-carrito-de-compras.png"
