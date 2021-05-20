@@ -1,43 +1,47 @@
 const express = require("express")
 const app = express()
 const exphbs = require("express-handlebars")
+const bodyParser = require("body-parser")
+const dbConecction = require('./dbConnection')
+const connection = dbConecction() 
 const data = []
 
+
+
 app.listen(3003, _ => {
-console.log("Servidor conectado");
+    console.log("Servidor conectado");
 })
 
+app.set("view engine", "handlebars")
 app.engine(
-"handlebars",
-exphbs({
-layoutsDir: __dirname + "/views",
-partialsDir: __dirname + "/views/components/",
+    "handlebars",
+    exphbs({
+        layoutsDir: __dirname + "/views",
+        partialsDir: __dirname + "/views/components/",
 })
 )
 
-app.set("view engine", "handlebars")
-
-
 app.use('/bootstrap', express.static(__dirname +
     '/node_modules/bootstrap/dist/css'))
-app.use('/bootstrapjs', express.static(__dirname +
-    '/node_modules/bootstrap/dist/js'))
+    app.use('/bootstrapjs', express.static(__dirname +
+        '/node_modules/bootstrap/dist/js'))
 app.use('/jquery', express.static(__dirname +
     '/node_modules/jquery/dist'))
-
-
-
+    
 app.use(express.static("assets"))
+    
+//middlewares
+    
 app.get("/", function (req, res) {
-res.render("Inicio", {
-layout: "Inicio",
-imagenes: [
-    "redlabrl"
-],
-src: 
-"https://www.seekpng.com/png/detail/986-9868123_png-file-icono-carrito-de-compras.png"
-});
-});
+  connection.query('SELECT * FROM product', (err, result) => {
+    res.render("Inicio", {
+      layout: "Inicio",
+      imagenes: result,
+      src: 
+      "https://www.seekpng.com/png/detail/986-9868123_png-file-icono-carrito-de-compras.png"
+    })
+  })
+})
 
 app.post("/producto", function (req, res) {
     let body = "";
@@ -52,6 +56,6 @@ app.post("/producto", function (req, res) {
 })
 
 app.get("/productos", function (req, res) {
-    // console.log(data)
+
     res.end(JSON.stringify(data));
 })
